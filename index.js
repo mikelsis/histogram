@@ -54,18 +54,6 @@ Histogram.prototype.smooth = function(size){
 };
 
 /**
- * Clear canvas before draw second historgram
- *
- * @param {Canvas} canvas
- * @api public
-*/
-
-Histogram.prototype.clear = function(canvas) {
-  var ctx = canvas.getContext('2d');
-  ctx.clearRect (0, 0, canvas.width, canvas.height);
-}
-
-/**
  * Draw the histogram on the given `canvas`.
  *
  * @param {Canvas} canvas
@@ -78,6 +66,8 @@ Histogram.prototype.draw = function(canvas){
   var h = canvas.height;
   var ctx = canvas.getContext('2d');
   var data = this.histogram();
+
+  ctx.clearRect (0, 0, w, h);
 
   var rm = max(data.r);
   var gm = max(data.g);
