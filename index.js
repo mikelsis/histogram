@@ -29,6 +29,7 @@ function Histogram(img) {
   this.rcolor = style('.histogram .red', 'color');
   this.gcolor = style('.histogram .green', 'color');
   this.bcolor = style('.histogram .blue', 'color');
+  this.acolor = style('.histogram .alpha', 'color');
 }
 
 /**
@@ -69,7 +70,8 @@ Histogram.prototype.draw = function(canvas){
   var rm = max(data.r);
   var gm = max(data.g);
   var bm = max(data.b);
-  var m = max([rm, gm, bm]);
+  var am = max(data.a);
+  var m = max([rm, gm, bm, am]);
 
   if (2 == ratio) ctx.scale(.5, .5);
 
@@ -86,6 +88,9 @@ Histogram.prototype.draw = function(canvas){
 
   ctx.fillStyle = ctx.strokeStyle = this.bcolor;
   this.drawColor(ctx, data.b, m);
+
+  ctx.fillStyle = ctx.strokeStyle = this.bcolor;
+  this.drawColor(ctx, data.a, m);
 
   if (!this.borderColor) return;
 
@@ -157,12 +162,14 @@ Histogram.prototype.histogram = function(){
   ret.r = new Array(256);
   ret.g = new Array(256);
   ret.b = new Array(256);
+  ret.a = new Array(256);
 
   // zero
   for (var i = 0; i < 256; i++) {
     ret.r[i] = 0;
     ret.g[i] = 0;
     ret.b[i] = 0;
+    ret.a[i] = 0;
   }
 
   // fill
@@ -170,9 +177,11 @@ Histogram.prototype.histogram = function(){
     var r = pixels[i];
     var g = pixels[i + 1];
     var b = pixels[i + 2];
+    var a = pixels[i + 3];
     if (ret.r[r] < sensivity) ret.r[r]++;
     if (ret.g[g] < sensivity) ret.g[g]++;
     if (ret.b[b] < sensivity) ret.b[b]++;
+    if (ret.a[a] < sensivity) ret.a[a]++;
   }
 
   return ret;
