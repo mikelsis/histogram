@@ -183,7 +183,12 @@ Histogram.prototype.histogram = function(){
     if (ret.r[r] < sensivity) ret.r[r]++;
     if (ret.g[g] < sensivity) ret.g[g]++;
     if (ret.b[b] < sensivity) ret.b[b]++;
-    if (ret.a[a] < sensivity) ret.a[a]++;
+    
+    if (r === 0) {
+      if (ret.a[a] < sensivity) ret.a[a]++;
+    } else if (r === 255) {
+      if (ret.a[a] < sensivity) ret.a[a]++;
+    }
   }
 
   return ret;
